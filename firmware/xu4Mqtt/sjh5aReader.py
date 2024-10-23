@@ -65,8 +65,9 @@ def check_measurement():
 if __name__ == "__main__":
     try:
         while True:
+            print("----------")
             check_measurement()
-            time.sleep(10);
+            time.sleep(5);
     
     except Exception as e:
         print(f"An error occurred: {e}")
