@@ -4,7 +4,7 @@ import datetime
 from mintsXU4 import mintsSensorReader as mSR
 from mintsXU4 import mintsDefinitions as mD
 import sys
-
+import time
 # dataFolder  = mD.dataFolder
 # ipsPort     = "/dev/ttyS0"
 # baudRate    = 115200
@@ -64,7 +64,10 @@ def check_measurement():
 
 if __name__ == "__main__":
     try:
-        check_measurement()
+        while True:
+            check_measurement()
+            time.sleep(10);
+    
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
