@@ -41,7 +41,7 @@ def check_measurement():
 
     # Read the response
     response = read_response()
-
+    print(response)
     if len(response) == 9:
         # Parse the response
         if response[0] == 0x16:  # ACK
