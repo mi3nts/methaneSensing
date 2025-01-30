@@ -234,7 +234,7 @@ def WIMWVWriteAM(sensorData,dateTime):
     if(len(dataOut) ==(dataLength +1) and bool(dataOut[1])):
         sensorDictionary = OrderedDict([
                 ("dateTime"       ,str(dateTime)),
-        	("windAngle"      ,dataOut[1]),
+        	    ("windAngle"      ,dataOut[1]),
             	("WAReference"    ,dataOut[2]),
                 ("windSpeed"      ,dataOut[3]),
             	("WSUnits" ,       dataOut[4]),

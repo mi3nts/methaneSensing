@@ -81,19 +81,32 @@ def findMacAddress():
     if (macAddress!= None):
         return macAddress.replace(":","")
 
+    macAddress= get_mac_address(interface="en0")
+    if (macAddress!= None):
+        return macAddress.replace(":","")
+
     return "xxxxxxxx"
 
 
+macAddress            = findMacAddress()
 
-dataFolderReference       = "/home/teamlary/mintsData/reference"
-dataFolderMQTTReference   = "/home/teamlary/mintsData/referenceMQTT"
-dataFolder                = "/home/teamlary/mintsData/raw"
-hostsDataFolder           = "/home/teamlary/mintsDataHosts/raw"
-dataFolderMQTT            = "/home/teamlary/mintsData/rawMQTT"
-statusJsonFile            = "/home/teamlary/status/status.json"
-hostsStatusJsonFile       = "/home/teamlary/hostStatus/status.json"
-gpsOnJsonFile             = "/home/teamlary/statusFiles/gpsOn.json"
-gpsOffJsonFile            = "/home/teamlary/statusFiles/gpsOff.json"
+
+baseFolder                = "/home/teamlary/"
+
+if macAddress == "2ed3ff75af22":
+    baseFolder                = "/Users/lakitha/"
+
+
+
+dataFolderReference       = baseFolder + "mintsData/reference"
+dataFolderMQTTReference   = baseFolder + "mintsData/referenceMQTT"
+dataFolder                = baseFolder + "mintsData/raw"
+hostsDataFolder           = baseFolder + "mintsDataHosts/raw"
+dataFolderMQTT            = baseFolder + "mintsData/rawMQTT"
+statusJsonFile            = baseFolder + "status/status.json"
+hostsStatusJsonFile       = baseFolder + "hostStatus/status.json"
+gpsOnJsonFile             = baseFolder + "statusFiles/gpsOn.json"
+gpsOffJsonFile            = baseFolder + "statusFiles/gpsOff.json"
 
 
 duePort               = findDuePort()
@@ -101,7 +114,7 @@ nanoPorts             = findNanoPorts()
 ozonePort             = findOzonePort()
 ipsPorts              = findIPSPorts()
 show2Port             = findPort("CP2104 USB to UART Bridge Controller")
-macAddress            = findMacAddress()
+
 latestDisplayOn       = False
 latestOn              = True
 airmarPort            = findAirmarPort()
