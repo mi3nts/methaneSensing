@@ -36,7 +36,7 @@ def read(startTimePro):
     while True:
         try:
             inaSolarOut   = INA219(SHUNT_OHMS, busnum=1)
-            print("Adafruit_GPIO.I2C" in str(inaSolarOut._i2c))
+            # print("Adafruit_GPIO.I2C" in str(inaSolarOut._i2c))
             inaSolarOut.configure()
             dateTime = datetime.datetime.now()
             sensorDictionary = OrderedDict([
