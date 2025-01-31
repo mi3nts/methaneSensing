@@ -12,8 +12,10 @@ import sys
 SHUNT_OHMS = 0.1
 MAX_EXPECTED_AMPS = 0.2
 
-loopInterval = 5 
 startTimePro = time.time()
+
+loopInterval = 5 
+
 
 try:
     inaSolarOut   = INA219(SHUNT_OHMS, busnum=1)
@@ -29,7 +31,8 @@ except Exception as e:
     time.sleep(.5)
     sys.exit()
 
-def read():
+def read(startTimePro):
+    startTime = startTimePro
     while True:
         try:
             inaSolarOut   = INA219(SHUNT_OHMS, busnum=1)
@@ -58,4 +61,5 @@ def read():
 
 
 if __name__ == "__main__":
-    read()
+
+    read(startTimePro)
