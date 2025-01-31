@@ -18,9 +18,9 @@ loopInterval = 5
 
 
 try:
-    inaSolarOut   = INA219(SHUNT_OHMS, busnum=1)
+    ina   = INA219(SHUNT_OHMS, busnum=1)
     # print("Adafruit_GPIO.I2C" in str(inaSolarOut._i2c))
-    inaSolarOut.configure()
+    ina.configure()
 
 except Exception as e:
     time.sleep(.5)
@@ -36,12 +36,11 @@ def read(startTimePro):
     while True:
         try:
             dateTime = datetime.datetime.now()
-            print(inaSolarOut.current())
-            print(inaSolarOut.shunt_voltage())
+
             sensorDictionary = OrderedDict([
                 ("dateTime", str(dateTime)),
-                ("methaneEqBusVoltage", inaSolarOut.voltage()),  
-                ("methanePower",        inaSolarOut.power()),  
+                ("methaneEQBusVoltage", ina.voltage()),  
+                ("methaneEQCurrent"   , ina.current()),  
                         ])
             pprint(sensorDictionary)  
             print()                                 
