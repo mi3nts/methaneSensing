@@ -40,7 +40,7 @@ def read(startTimePro):
             sensorDictionary = OrderedDict([
                 ("dateTime", str(dateTime)),
                 ("methaneEQBusVoltage", ina.voltage()),  
-                ("methaneEQCurrent"   , ina.current()),  
+                ("methaneEQCurrent"   , ina.shunt_voltage()),  
                         ])
             pprint(sensorDictionary)  
             print()                                 
