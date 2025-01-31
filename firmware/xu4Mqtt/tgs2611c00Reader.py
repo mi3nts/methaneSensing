@@ -36,6 +36,7 @@ def read(startTimePro):
     while True:
         try:
             dateTime = datetime.datetime.now()
+            print(inaSolarOut.current())
             sensorDictionary = OrderedDict([
                 ("dateTime", str(dateTime)),
                 ("methaneEqBusVoltage", inaSolarOut.voltage()),  
