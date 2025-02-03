@@ -14,7 +14,7 @@ MAX_EXPECTED_AMPS = 0.2
 
 startTimePro = time.time()
 
-loopInterval = 5 
+loopInterval = 1
 
 
 try:
