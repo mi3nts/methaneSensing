@@ -41,7 +41,8 @@ def read(startTimePro):
                 ("methaneEQBusVoltage", ina.voltage()),  
                         ])
             pprint(sensorDictionary)  
-            print()                                 
+            print()       
+                                      
             if time.time() - startTimePro> 60 :
                 print("Sensor Warmed Up")
                 mSR.sensorFinisher(dateTime,"TGS2611C00",sensorDictionary)

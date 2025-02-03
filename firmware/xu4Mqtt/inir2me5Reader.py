@@ -5,8 +5,10 @@ from pprint import pprint
 from collections import OrderedDict
 from mintsXU4 import mintsSensorReader as mSR
 # Serial port configuration
-methanePort = "/dev/tty.usbserial-0001"  # Replace with your port
-baudRate = 38400
+methanePort  = "/dev/tty.usbserial-0001"  # Replace with your port
+baudRate     = 38400
+loopInterval = 1 
+
 
 def main():
     """
@@ -41,12 +43,13 @@ def main():
 
         print("Entering Engineering Mode")
         EngineeringMode, response   = send_command("B",ser)
+
         if(EngineeringMode):
             print("In Engineering Mode")
 
             lineASCII = []
-            startTime = time.time()
-
+            startTimeMacro = time.time()
+            startTime      = startTimeMacro
             while True:
                 try:
                     # Read bytes from the serial buffer
@@ -78,12 +81,16 @@ def main():
                                             ])
                                 pprint(sensorDictionary)
                                 
-                                if time.time() - startTime> 60 :
+                                if time.time() - startTimeMacro> 60 :
                                     print("Sensor Warmed Up")
                                     mSR.sensorFinisher(dateTime,"INIR2ME5",sensorDictionary)
                                 
+
+                                                           
                                 lineASCII = []
                                 lines     = []
+
+                            startTime = mSR.delayMints(time.time() - startTime,loopInterval)     
 
                 except Exception as e:
                     print(f"Incomplete read. Error: {e}")
