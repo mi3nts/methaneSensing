@@ -47,7 +47,6 @@ def main():
 
         print("Entering Engineering Mode")
         EngineeringMode, response   = send_command("B",ser)
-        print(response)
         if(EngineeringMode):
             print("In Engineering Mode")
             lineASCII = []
@@ -164,7 +163,7 @@ def send_command(command,ser):
     time.sleep(1)
     response = ser.read(500).decode(errors="ignore")
     response = response.strip()
-    # print(f"Response: {response.strip()}")
+    print(f"Response: {response.strip()}")
     time.sleep(1)
     if response.endswith("5b414b5d"):
         print("Command Accepted")
