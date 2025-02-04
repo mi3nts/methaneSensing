@@ -4,10 +4,10 @@ import datetime
 from pprint import pprint
 from collections import OrderedDict
 from mintsXU4 import mintsSensorReader as mSR
+from mintsXU4 import mintsDefinitions as mD
+
 # Serial port configuration
-methanePort = "/dev/tty.usbserial-0001"  # Replace with your port
-# methanePort = "/dev/tty.usbserial-AU0645LQ"  # Replace with your port
-# methanePort = "/dev/tty.usbserial-AU06B0OD"
+methanePort =   mD.sjh5Port
 baudRate = 9600
 loopInterval = 5
 
