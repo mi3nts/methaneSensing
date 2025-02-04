@@ -31,7 +31,6 @@ import json
 
 macAddress      = mD.macAddress
 dataFolder      = mD.dataFolder
-latestDisplayOn = mD.latestDisplayOn
 dataFolderMQTT  = mD.dataFolderMQTT
 latestOn        = mD.latestOn
 mqttOn          = mD.mqttOn
