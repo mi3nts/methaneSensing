@@ -158,6 +158,8 @@ def send_command(command,ser):
     # Format the command structure and encode it
     full_command = f"[{command.upper()}]"
     ser.write(full_command.encode())
+    response = ser.read(500).decode(errors="ignore")
+    time.sleep(1)
     print(f"Sent command: {full_command}")
     time.sleep(1)
     response = ser.read(500).decode(errors="ignore")
