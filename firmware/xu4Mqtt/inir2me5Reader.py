@@ -40,7 +40,7 @@ def main():
         print("Requesting to read back current settings")
         dateTime = datetime.datetime.now()
         readSettings, response = send_command("I",ser)
-        # print(response)
+        print(readSettings)
         if(readSettings):
             print("Printing  Settings")
             printSettings(response,dateTime)
@@ -50,6 +50,8 @@ def main():
         # print(response)
         if(EngineeringMode):
             print("In Engineering Mode")
+
+
 
             lineASCII = []
             startTimeMacro = time.time()
