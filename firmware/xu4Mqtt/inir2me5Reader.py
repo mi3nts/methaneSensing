@@ -39,6 +39,7 @@ def main():
 
         print("Requesting to read back current settings")
         dateTime = datetime.datetime.now()
+        time.sleep(2)
         readSettings, response = send_command("I",ser)
         print(readSettings)
         if(readSettings):
