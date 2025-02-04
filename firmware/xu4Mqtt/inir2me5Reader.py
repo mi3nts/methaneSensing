@@ -42,6 +42,7 @@ def main():
         time.sleep(2)
         readSettings, response = send_command("I",ser)
         print(readSettings)
+        print(response)
         if(readSettings):
             print("Printing  Settings")
             printSettings(response,dateTime)
