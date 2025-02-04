@@ -74,7 +74,7 @@ def main():
                     # print(str(dataString))
             
                     
-                    if (dataString.startswith("$YXXDR,A") and mSR.getDeltaTimeAM(lastYXXDR,delta)):
+                    if (dataString.startswith("$YXXDR") and mSR.getDeltaTimeAM(lastYXXDR,delta)):
                         mSR.YXXDRWriteAM2(dataString,dateTime)
                         lastYXXDR = time.time()
                     # print(str(dataString))
