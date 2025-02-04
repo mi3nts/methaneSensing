@@ -89,8 +89,8 @@ def sensorFinisherReference(dateTime,sensorName,sensorDictionary):
     exists    = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
-    if(latestDisplayOn):
-       mL.writeJSONLatestReference(sensorDictionary,sensorName)
+    # if(latestDisplayOn):
+    #    mL.writeJSONLatestReference(sensorDictionary,sensorName)
     print(sensorName)
     print(sensorDictionary)
     print("-----------------------------------")
@@ -102,8 +102,8 @@ def sensorFinisherIP(dateTime,sensorName,sensorDictionary):
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
     print(writePath)
-    if(latestDisplayOn):
-       mL.writeJSONLatest(sensorDictionary,sensorName)
+    # if(latestDisplayOn):
+    #    mL.writeJSONLatest(sensorDictionary,sensorName)
     if(mqttOn):
        mL.writeMQTTLatest(sensorDictionary,sensorName)   
         
