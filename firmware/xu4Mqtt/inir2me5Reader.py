@@ -164,11 +164,11 @@ def send_command(command,ser):
     full_command = f"[{command.upper()}]"
     ser.write(full_command.encode())
     print(f"Sent command: {full_command}")
-    time.sleep(.1)
+    time.sleep(1)
     response = ser.read(500).decode(errors="ignore")
     response = response.strip()
     # print(f"Response: {response.strip()}")
-    time.sleep(.1)
+    time.sleep(1)
     if response.endswith("5b414b5d"):
         print("Command Accepted")
         return True,response
