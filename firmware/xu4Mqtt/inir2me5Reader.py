@@ -109,9 +109,6 @@ def printSettings(response,dateTime):
     print(response)
     lineSettings = response.split("\n\r")
     lineSettings   = [lineSettings for lineSettings in lineSettings if lineSettings.strip()]
-    print(lineSettings)
-    print(len(lineSettings))
-
     if len(lineSettings) == 38:
         settingsDictionary = OrderedDict([
             ("dateTime", str(dateTime)),
