@@ -4,8 +4,12 @@ import datetime
 from pprint import pprint
 from collections import OrderedDict
 from mintsXU4 import mintsSensorReader as mSR
+
 # Serial port configuration
-methanePort  = "/dev/tty.usbserial-0001"  # Replace with your port
+methanePort = "/dev/tty.usbserial-0001"  # Replace with your port
+# methanePort = "/dev/tty.usbserial-AU0645LQ"  # Replace with your port
+# methanePort = "/dev/tty.usbserial-AU06B0OD"
+
 baudRate     = 38400
 loopInterval = 1 
 
@@ -31,19 +35,21 @@ def main():
 
         print("Entering Configuration Mode")
         configMode, response   = send_command("C",ser)
+        # print(response)
         if(configMode):
             print("In Configuration Mode")
 
         print("Requesting to read back current settings")
         dateTime = datetime.datetime.now()
         readSettings, response = send_command("I",ser)
+        # print(response)
         if(readSettings):
             print("Printing  Settings")
             printSettings(response,dateTime)
 
         print("Entering Engineering Mode")
         EngineeringMode, response   = send_command("B",ser)
-
+        # print(response)
         if(EngineeringMode):
             print("In Engineering Mode")
 

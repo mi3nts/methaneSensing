@@ -7,6 +7,7 @@ from mintsXU4 import mintsSensorReader as mSR
 # Serial port configuration
 methanePort = "/dev/tty.usbserial-0001"  # Replace with your port
 # methanePort = "/dev/tty.usbserial-AU0645LQ"  # Replace with your port
+# methanePort = "/dev/tty.usbserial-AU06B0OD"
 baudRate = 9600
 loopInterval = 5
 
@@ -68,8 +69,10 @@ def send_command(command,ser):
         ser.write(bytearray(send_command))
         time.sleep(.1) 
         response = ser.read(20)
+        # print(response)
         print(f"Response received:") 
         ack = response[0]
+
         time.sleep(.1)
         if ack == ACK_SUCCESS :
             print()

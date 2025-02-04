@@ -2,6 +2,7 @@
 from getmac import get_mac_address
 import serial.tools.list_ports
 
+
 def findPort(find):
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
@@ -64,6 +65,32 @@ def findAirmarPort():
     return ozonePort
   
 
+
+def find_serial_port_by_location(target_location):
+    """Finds the serial port associated with a given USB physical location.
+
+    Args:
+        target_location: The USB physical location string (e.g., '1-1.1').
+
+    Returns:
+        The serial port device name (e.g., '/dev/ttyUSB0') or None if not found.
+    """
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+        if hasattr(port, 'location') and port.location == target_location:
+            print(f"Found matching port: {port.device}")
+            print(f"Description: {port.description}")
+            print(f"HWID: {port.hwid}")
+            print(f"Serial Number: {port.serial_number}")
+            return port.device
+
+    print(f"No port found for location: {target_location}")
+    return None
+
+
+
+
+
 def findMacAddress():
     macAddress= get_mac_address(interface="eth0")
     if (macAddress!= None):
@@ -109,15 +136,15 @@ gpsOnJsonFile             = baseFolder + "statusFiles/gpsOn.json"
 gpsOffJsonFile            = baseFolder + "statusFiles/gpsOff.json"
 
 
-duePort               = findDuePort()
-nanoPorts             = findNanoPorts()
-ozonePort             = findOzonePort()
-ipsPorts              = findIPSPorts()
-show2Port             = findPort("CP2104 USB to UART Bridge Controller")
+# duePort               = findDuePort()
+# nanoPorts             = findNanoPorts()
+# ozonePort             = findOzonePort()
+# # ipsPorts              = findIPSPorts()
+# show2Port             = findPort("CP2104 USB to UART Bridge Controller")
 
-latestDisplayOn       = False
+
 latestOn              = True
-airmarPort            = findAirmarPort()
+airmarPort            = findAirmarPort('1-1.1')
 # For MQTT 
 mqttOn                = True
 
@@ -131,33 +158,33 @@ mqttPort              =  8883  # Secure port
 gpsPort               = findPort("GPS/GNSS Receiver")
 
 
+
+
 if __name__ == "__main__":
     # the following code is for debugging
     # to make sure everything is working run python3 mintsDefinitions.py 
-    print("Mac Address          : {0}".format(macAddress))
-    print("Data Folder Reference: {0}".format(dataFolderReference))
-    print("Data Folder Raw      : {0}".format(dataFolder))
-    print("Due Port             : {0}".format(duePort))
-    print("Ozone Port           : {0}".format(ozonePort))
-    print("GPS Port             : {0}".format(gpsPort))
-    print("Airmar Port           : {0}".format(airmarPort))
-    print("Show2 Port           : {0}".format(show2Port))
-    print("Latest On            : {0}".format(latestDisplayOn))
+    print("Mac Address                : {0}".format(macAddress))
+    print("Data Folder Reference      : {0}".format(dataFolderReference))
+    print("Data Folder Raw            : {0}".format(dataFolder))
     print("Latest On                  : {0}".format(latestOn))
     print("MQTT On                    : {0}".format(mqttOn))
     print("MQTT Credentials File      : {0}".format(mqttCredentialsFile))
     print("MQTT Broker and Port       : {0}, {1}".format(mqttOn,mqttPort))
-
     
-    #-------------------------------------------#
-    print("Ozone Ports :")
-    for dev in ozonePort:
-        print("\t{0}".format(dev))
-    #-------------------------------------------#
-    print("IPS Ports :")
-    for dev in ipsPorts:
-        print("\t{0}".format(dev))
-    #-------------------------------------------#
-    print("Nano Ports :")
-    for dev in nanoPorts:
-        print("\t{0}".format(dev))
+    print()
+    print("#-------------------------------------------#")
+    print("Airmar Port                : {0}".format(airmarPort))
+    print("Airmar Port                : {0}".format(airmarPort))
+    
+    # #-------------------------------------------#
+    # print("Ozone Ports :")
+    # for dev in ozonePort:
+    #     print("\t{0}".format(dev))
+    # #-------------------------------------------#
+    # print("IPS Ports :")
+    # for dev in ipsPorts:
+    #     print("\t{0}".format(dev))
+    # #-------------------------------------------#
+    # print("Nano Ports :")
+    # for dev in nanoPorts:
+    #     print("\t{0}".format(dev))
