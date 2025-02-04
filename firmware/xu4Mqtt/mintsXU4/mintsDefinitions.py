@@ -148,7 +148,7 @@ airmarPort            = find_serial_port_by_location('1-1.1')
 inir2me5Port          = find_serial_port_by_location('1-1.2')
 sjh5Port              = find_serial_port_by_location('1-1.3.')
 
-
+print(sjh5Port)
 
 # For MQTT 
 mqttOn                = True
