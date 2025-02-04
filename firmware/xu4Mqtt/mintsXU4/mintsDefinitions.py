@@ -145,6 +145,11 @@ gpsOffJsonFile            = baseFolder + "statusFiles/gpsOff.json"
 
 latestOn              = True
 airmarPort            = find_serial_port_by_location('1-1.1')
+inir2me5Port          = find_serial_port_by_location('1-1.2')
+sjh5Port              = find_serial_port_by_location('1-1.3')
+
+
+
 # For MQTT 
 mqttOn                = True
 
@@ -174,17 +179,5 @@ if __name__ == "__main__":
     print()
     print("#-------------------------------------------#")
     print("Airmar Port                : {0}".format(airmarPort))
-
-    
-    # #-------------------------------------------#
-    # print("Ozone Ports :")
-    # for dev in ozonePort:
-    #     print("\t{0}".format(dev))
-    # #-------------------------------------------#
-    # print("IPS Ports :")
-    # for dev in ipsPorts:
-    #     print("\t{0}".format(dev))
-    # #-------------------------------------------#
-    # print("Nano Ports :")
-    # for dev in nanoPorts:
-    #     print("\t{0}".format(dev))
+    print("SJH5 Port                  : {0}".format(sjh5Port))
+    print("INIR2ME5 Port              : {0}".format(inir2me5Port))
