@@ -158,9 +158,9 @@ def send_command(command,ser):
     full_command = f"[{command.upper()}]"
     ser.write(full_command.encode())
     response = ser.read(500).decode(errors="ignore")
-    time.sleep(1)
+    time.sleep(.2)
     print(f"Sent command: {full_command}")
-    time.sleep(1)
+    time.sleep(.2)
     response = ser.read(500).decode(errors="ignore")
     response = response.strip()
     print(f"Response: {response.strip()}")
