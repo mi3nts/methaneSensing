@@ -174,7 +174,7 @@ if __name__ == "__main__":
     print()
     print("#-------------------------------------------#")
     print("Airmar Port                : {0}".format(airmarPort))
-    print("Airmar Port                : {0}".format(airmarPort))
+
     
     # #-------------------------------------------#
     # print("Ozone Ports :")

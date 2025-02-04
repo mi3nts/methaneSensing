@@ -7,10 +7,10 @@ sleep 5
 python3 airMarReader.py &
 sleep 5
 
-# kill $(pgrep -f 'inir2me5Reader.py')
-# sleep 5
-# python3 inir2me5Reader.py &
-# sleep 5
+kill $(pgrep -f 'inir2me5Reader.py')
+sleep 5
+python3 inir2me5Reader.py &
+sleep 5
 
 kill $(pgrep -f 'tgs2611c00Reader.py')
 sleep 5
