@@ -47,7 +47,7 @@ def main():
 
         print("Entering Engineering Mode")
         EngineeringMode, response   = send_command("B",ser)
-        
+        print(response)
         if(EngineeringMode):
             print("In Engineering Mode")
             lineASCII = []
@@ -105,7 +105,7 @@ def main():
 
 def printSettings(response,dateTime):
 
-    print(response)
+    # print(response)
     lineSettings = response.split("\n\r")
     lineSettings   = [lineSettings for lineSettings in lineSettings if lineSettings.strip()]
     if len(lineSettings) == 38:
