@@ -8,7 +8,7 @@ import serial
 from collections import OrderedDict
 
 dataFolder    =  mD.dataFolder
-airmarPort    =  mD.airmarPort[0]
+airmarPort    =  mD.airmarPort
 print(airmarPort)
 
 def main():
