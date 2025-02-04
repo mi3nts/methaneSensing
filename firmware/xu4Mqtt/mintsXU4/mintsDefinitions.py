@@ -144,7 +144,7 @@ gpsOffJsonFile            = baseFolder + "statusFiles/gpsOff.json"
 
 
 latestOn              = True
-airmarPort            = findAirmarPort('1-1.1')
+airmarPort            = find_serial_port_by_location('1-1.1')
 # For MQTT 
 mqttOn                = True
 
