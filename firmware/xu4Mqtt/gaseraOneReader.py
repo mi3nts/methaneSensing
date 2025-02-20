@@ -18,6 +18,15 @@ class GaseraOneSensor:
             "7": "Canceling measurement",
             "8": "Laserscan in progress"
         }
+
+        self.measurement_status_map = {
+            "0": "None (device is idle)",
+            "1": "Gas exchange in progress",
+            "2": "Sample integration (measurement) in progress",
+            "3": "Sample analysis in progress",
+            "4": "Laser tuning in progress"
+        }
+    
     
     def format_ak_request(self, command: str, channel: str = "0", data: str = "") -> bytes:
         """Formats an AK request according to the specified protocol."""
@@ -70,6 +79,15 @@ class GaseraOneSensor:
                         conc_ppm = parts[i + 2]
                         measurements.append(f"Timestamp: {timestamp}, CAS: {cas}, Concentration: {conc_ppm} ppm")
                     return "\n".join(measurements)
+
+            elif parts[0] == "AMST":
+                error_status = parts[1]
+                measurement_status_code = parts[2] if len(parts) > 2 else "Unknown"
+                measurement_status = self.measurement_status_map.get(measurement_status_code, "Unknown measurement status")
+                return f"Error Status: {error_status}, Measurement Status: {measurement_status}"
+        
+
+
         return "Invalid response format"
     
     
@@ -130,7 +148,16 @@ class GaseraOneSensor:
         self.socket.sendall(request_results)
         response_results = self.socket.recv(1024)
         return self.parse_ak_response(response_results)
-    
+
+    def request_measurement_status(self):
+        """Request measurement status (AMST) and parse the response."""
+        request_status = self.format_ak_request("AMST")
+        self.socket.sendall(request_status)
+        response_status = self.socket.recv(1024)
+        return self.parse_ak_response(response_status)
+
+
+
     def get_device_status(self):
         """Retrieves the device status."""
         return self.request_device_status()
@@ -151,6 +178,11 @@ class GaseraOneSensor:
         """Retrieves the last measurement results (concentrations)."""
         return self.request_last_measurement_results()
 
+
+    def get_measurement_status(self):
+        """Retrieves the measurement status."""
+        return self.request_measurement_status()
+
 if __name__ == "__main__":
     # Create an instance of the sensor
     sensor = GaseraOneSensor("192.168.20.112")
@@ -162,7 +194,8 @@ if __name__ == "__main__":
     print(f"Device Status: {sensor.get_device_status()}")
     print(f"Active Errors: {sensor.get_active_errors()}")
     print(f"Task List:\n{sensor.get_task_list()}")
-    
+    print(f"Measurement Status: {sensor.get_measurement_status()}")
+        
     # time.sleep(60)
     # print(f"Stop Measurement: {sensor.stop_measurement()}")
     # time.sleep(60)
