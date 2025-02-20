@@ -86,7 +86,12 @@ class GaseraOneSensor:
                 measurement_status = self.measurement_status_map.get(measurement_status_code, "Unknown measurement status")
                 return f"Error Status: {error_status}, Measurement Status: {measurement_status}"
         
-
+            
+            elif parts[0] == "ANAM":
+                error_status = parts[1]
+                device_name = parts[2] if len(parts) > 2 else ""
+                return f"Error Status: {error_status}, Device Name: {device_name}"
+        
 
         return "Invalid response format"
     
@@ -156,7 +161,12 @@ class GaseraOneSensor:
         response_status = self.socket.recv(1024)
         return self.parse_ak_response(response_status)
 
-
+    def request_device_name(self):
+        """Request device name and parse the response."""
+        request_name = self.format_ak_request("ANAM")
+        self.socket.sendall(request_name)
+        response_name = self.socket.recv(1024)
+        return self.parse_ak_response(response_name)
 
     def get_device_status(self):
         """Retrieves the device status."""
@@ -195,7 +205,7 @@ if __name__ == "__main__":
     print(f"Active Errors: {sensor.get_active_errors()}")
     print(f"Task List:\n{sensor.get_task_list()}")
     print(f"Measurement Status: {sensor.get_measurement_status()}")
-        
+    print(f"Device Name: {sensor.request_device_name()}")    
     # time.sleep(60)
     # print(f"Stop Measurement: {sensor.stop_measurement()}")
     # time.sleep(60)
