@@ -169,6 +169,15 @@ class GaseraOneSensor:
         response_name = self.socket.recv(1024)
         return self.parse_ak_response(response_name)
 
+    
+    def request_iteration_number(self):
+        """Request current measurement iteration number and parse the response."""
+        request_iteration = self.format_ak_request("AITR")
+        self.socket.sendall(request_iteration)
+        response_iteration = self.socket.recv(1024)
+        return self.parse_ak_response(response_iteration)
+
+
     def get_device_status(self):
         """Retrieves the device status."""
         return self.request_device_status()
@@ -207,6 +216,8 @@ if __name__ == "__main__":
     print(f"Task List:\n{sensor.get_task_list()}")
     print(f"Measurement Status: {sensor.get_measurement_status()}")
     print(f"Device Name: {sensor.request_device_name()}")    
+    print(f"Iteration Number: {sensor.request_iteration_number()}")
+    
     # time.sleep(60)
     # print(f"Stop Measurement: {sensor.stop_measurement()}")
     # time.sleep(60)
