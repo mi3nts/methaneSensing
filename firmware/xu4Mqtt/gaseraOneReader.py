@@ -40,6 +40,7 @@ class GaseraOneSensor:
     def parse_ak_response(self, response: bytes) -> str:
         """Parses the AK response and extracts relevant information."""
         if response.startswith(b'\x02') and response.endswith(b'\x03'):
+            print(response)
             response_str = response[1:-1].decode()
             parts = re.findall(r'([^\s"]+|\"[^\"]*\")', response_str)
 
