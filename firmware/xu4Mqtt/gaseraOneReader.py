@@ -74,7 +74,9 @@ class GaseraOneSensor:
     def get_measurement_status(self):
         """Retrieves the measurement status."""
         return self.request_measurement_status()
-    
+
+
+
 if __name__ == "__main__":
     # Create an instance of the sensor
     sensor = GaseraOneSensor("192.168.20.112")
@@ -82,8 +84,31 @@ if __name__ == "__main__":
     # Connect to the sensor
     sensor.connect()
     
-    # Get the measurement status
+    # Get the device status, active errors, task list, last measurement results, and stop measurement
+    print(f"Device Status: {sensor.get_device_status()}")
+    print(f"Active Errors: {sensor.get_active_errors()}")
+    print(f"Task List:\n{sensor.get_task_list()}")
     print(f"Measurement Status: {sensor.get_measurement_status()}")
+    # time.sleep(60)
+    # print(f"Stop Measurement: {sensor.stop_measurement()}")
+    # time.sleep(60)
+    # task_id = "11"  # Example task ID
+    # print(f"Start Measurement Response: {sensor.request_start_measurement(task_id)}")
+    # time.sleep(60)
+    
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(60)
+
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(60)
+
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(60)
+
+    
+    time.sleep(1)
+    # print(f"Stop Measurement: {sensor.stop_measurement()}")
     
     # Disconnect when done
     sensor.disconnect()
+
