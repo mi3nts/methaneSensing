@@ -163,21 +163,21 @@ if __name__ == "__main__":
     print(f"Active Errors: {sensor.get_active_errors()}")
     print(f"Task List:\n{sensor.get_task_list()}")
     
-    time.sleep(60)
-    print(f"Stop Measurement: {sensor.stop_measurement()}")
-    time.sleep(60)
-    task_id = "11"  # Example task ID
-    print(f"Start Measurement Response: {sensor.request_start_measurement(task_id)}")
-    time.sleep(60)
+    # time.sleep(60)
+    # print(f"Stop Measurement: {sensor.stop_measurement()}")
+    # time.sleep(60)
+    # task_id = "11"  # Example task ID
+    # print(f"Start Measurement Response: {sensor.request_start_measurement(task_id)}")
+    # time.sleep(60)
     
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(60)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(60)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(60)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(60)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(60)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(60)
 
     
     time.sleep(1)
