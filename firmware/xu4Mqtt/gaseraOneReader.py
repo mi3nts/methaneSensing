@@ -41,18 +41,17 @@ class GaseraOneSensor:
             dateTime  = datetime.now()
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(datetime.now())),
-                 ("hostIP"               ,"IP_"+ str(self.host)),
+                 ("hostIP"               ,str(self.host)),
                  ("ConnectionStatus"     ,0)
         	     ])
             mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
-            print(sensorDictionary)
             return True
 
         except socket.timeout:
             print(f"Connection timed out after {timeout} seconds.")
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(datetime.now())),
-                 ("hostIP"                   ,"IP_"+ str(self.host)),
+                 ("hostIP"               ,str(self.host)),
                  ("ConnectionStatus"     ,1)
         	     ])            
             mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
@@ -62,13 +61,11 @@ class GaseraOneSensor:
             print(f"Error: {e}")
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(datetime.now())),
-                 ("hostIP"                   ,"IP_"+ str(self.host)),
+                 ("hostIP"               ,str(self.host)),
                  ("ConnectionStatus"     ,2)
         	     ])            
             mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
             return False            
-
-
 
     def format_ak_request(self, command: str, channel: str = "0", data: str = "") -> bytes:
         """Formats an AK request according to the specified protocol."""
@@ -78,7 +75,39 @@ class GaseraOneSensor:
         formatted_command = f"{command} K{channel} {data}".encode()
         return stx + blank + formatted_command + etx
     
-        
+    def clean_ak_response(self, response: bytes) -> str:
+        """Parses the AK response and extracts relevant information."""
+        if response.startswith(b'\x02') and response.endswith(b'\x03'):
+            # print(response)
+            response_str = response[1:-1].decode()
+            parts = re.findall(r'([^\s"]+|\"[^\"]*\")', response_str)
+            return True, parts;
+        else: 
+            return False, None;
+
+    #  
+    def request_gasera_status(self):
+        """Request device status and parse the response."""
+        command  = "ASTS"
+        request_status = self.format_ak_request(command)
+        self.socket.sendall(request_status)
+        response_status = self.socket.recv(1024)
+        valid, parts = self.clean_ak_response(response_status)
+        if valid:
+            if parts[0] == command:
+                error_status = parts[1]
+                print(error_status)
+                device_status_code = parts[2] if len(parts) > 2 else "Unknown"
+                print(device_status_code)
+                device_status = self.status_map.get(device_status_code, "Unknown status")
+                print(device_status)
+                return True, f"Error Status: {error_status}, Device Status: {device_status}"
+            else:
+                return False, f"Invalid Command Output"
+        else:
+            False, f"Invalid Response"
+
+
     def parse_ak_response(self, response: bytes) -> str:
 
         """Parses the AK response and extracts relevant information."""
@@ -97,11 +126,13 @@ class GaseraOneSensor:
                         task_name = parts[i + 1].strip('"')
                         tasks.append(f"Task ID: {task_id}, Task Name: {task_name}")
                     return "\n".join(tasks)
+                
             elif parts[0] == "ASTS":
                 error_status = parts[1]
                 device_status_code = parts[2] if len(parts) > 2 else "Unknown"
                 device_status = self.status_map.get(device_status_code, "Unknown status")
                 return f"Error Status: {error_status}, Device Status: {device_status}"
+
             elif parts[0] == "AERR":
                 if parts[1] == "0":
                     errors = parts[2:] if len(parts) > 2 else ["No active errors"]
@@ -201,6 +232,26 @@ class GaseraOneSensor:
         
         return "Invalid response format"
     
+    def get_device_status(self):
+        """Retrieves the device status."""
+        return self.request_device_status()
+
+    def request_device_status(self):
+        """Request device status and parse the response."""
+        request_status = self.format_ak_request("ASTS")
+        self.socket.sendall(request_status)
+        response_status = self.socket.recv(1024)
+        return self.parse_ak_response(response_status)
+
+
+
+
+
+
+
+    def get_active_errors(self):
+        """Retrieves the active errors."""
+        return self.request_active_errors()
         
 
 
@@ -210,12 +261,6 @@ class GaseraOneSensor:
             self.socket.close()
             print("Disconnected from GASERA ONE")
 
-    def request_device_status(self):
-        """Request device status and parse the response."""
-        request_status = self.format_ak_request("ASTS")
-        self.socket.sendall(request_status)
-        response_status = self.socket.recv(1024)
-        return self.parse_ak_response(response_status)
 
     def request_active_errors(self):
         """Request active errors and parse the response."""
@@ -317,13 +362,7 @@ class GaseraOneSensor:
         return self.parse_ak_response(response_info)
 
 
-    def get_device_status(self):
-        """Retrieves the device status."""
-        return self.request_device_status()
 
-    def get_active_errors(self):
-        """Retrieves the active errors."""
-        return self.request_active_errors()
 
     def get_task_list(self):
         """Retrieves the task list."""
@@ -367,12 +406,16 @@ if __name__ == "__main__":
     sensor = GaseraOneSensor("192.168.20.112")
     # Connect to the sensor
     sensor.connect()
-
-
-
-
     # Connected to GASERA ONE at 192.168.20.112:8888
+
+
+    # Get the device status, active errors, task list, last measurement results, and stop measurement
+    print(f"Device Status: {sensor.get_device_status()}")
     # Device Status: Error Status: 0, Device Status: Device idle state
+    print(sensor.request_gasera_status())
+
+
+
     # Active Errors: Active Errors: 8002, 8004
     # Task List:
     # Task ID: 7, Task Name: Calibration task
@@ -437,8 +480,7 @@ if __name__ == "__main__":
     # Disconnected from GASERA ONE
 
 
-    # Get the device status, active errors, task list, last measurement results, and stop measurement
-    # print(f"Device Status: {sensor.get_device_status()}")
+
     # print(f"Active Errors: {sensor.get_active_errors()}")
     # print(f"Task List:\n{sensor.get_task_list()}")
     # print(f"Measurement Status: {sensor.get_measurement_status()}")
