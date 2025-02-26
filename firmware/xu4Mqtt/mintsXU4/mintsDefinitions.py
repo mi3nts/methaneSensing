@@ -78,13 +78,13 @@ def find_serial_port_by_location(target_location):
     ports = serial.tools.list_ports.comports()
     for port in ports:
         if hasattr(port, 'location') and port.location == target_location:
-            print(f"Found matching port: {port.device}")
-            print(f"Description: {port.description}")
-            print(f"HWID: {port.hwid}")
-            print(f"Serial Number: {port.serial_number}")
+            # print(f"Found matching port: {port.device}")
+            # print(f"Description: {port.description}")
+            # print(f"HWID: {port.hwid}")
+            # print(f"Serial Number: {port.serial_number}")
             return port.device
 
-    print(f"No port found for location: {target_location}")
+    # print(f"No port found for location: {target_location}")
     return None
 
 
@@ -116,7 +116,7 @@ def findMacAddress():
 
 
 macAddress            = findMacAddress()
-print(macAddress)
+# print(macAddress)
 
 baseFolder                = "/home/teamlary/"
 

@@ -25,9 +25,12 @@ import time
 import serial
 import pynmea2
 from collections import OrderedDict
+from pprint import pprint
 import netifaces as ni
 import math
 import json
+
+
 
 macAddress      = mD.macAddress
 dataFolder      = mD.dataFolder
@@ -55,7 +58,7 @@ def sensorFinisherWearable(dateTime,hostID,sensorName,sensorDictionary):
     if(latestOn):
        mL.writeJSONLatestWearable(hostID,sensorName,sensorDictionary)
     print(sensorName)
-    print(sensorDictionary)
+    pprint(sensorDictionary)
 
 
 def getWritePathWearable(nodeID,labelIn,dateTime):
@@ -76,10 +79,9 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
        mL.writeJSONLatest(sensorDictionary,sensorName)
     if(mqttOn):
        mL.writeMQTTLatest(sensorDictionary,sensorName)   
-
-    print("-----------------------------------")
     print(sensorName)
-    print(sensorDictionary)
+    pprint(sensorDictionary)
+    print("-----------------------------------")
 
 
 def sensorFinisherReference(dateTime,sensorName,sensorDictionary):
