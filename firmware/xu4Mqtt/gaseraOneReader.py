@@ -41,7 +41,7 @@ class GaseraOneSensor:
             dateTime  = datetime.now()
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(datetime.now())),
-                 ("IP"                   ,"IP_"+ str(self.host)),
+                 ("hostIP"               ,"IP_"+ str(self.host)),
                  ("ConnectionStatus"     ,0)
         	     ])
             mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
@@ -52,7 +52,7 @@ class GaseraOneSensor:
             print(f"Connection timed out after {timeout} seconds.")
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(datetime.now())),
-                 ("IP"                   ,"IP_"+ str(self.host)),
+                 ("hostIP"                   ,"IP_"+ str(self.host)),
                  ("ConnectionStatus"     ,1)
         	     ])            
             mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
@@ -62,7 +62,7 @@ class GaseraOneSensor:
             print(f"Error: {e}")
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(datetime.now())),
-                 ("IP"                   ,"IP_"+ str(self.host)),
+                 ("hostIP"                   ,"IP_"+ str(self.host)),
                  ("ConnectionStatus"     ,2)
         	     ])            
             mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
