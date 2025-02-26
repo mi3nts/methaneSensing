@@ -116,18 +116,21 @@ def findMacAddress():
 
 
 macAddress            = findMacAddress()
-
+print(macAddress)
 
 baseFolder                = "/home/teamlary/"
 
 if macAddress == "2ed3ff75af22":
     baseFolder                = "/Users/lakitha/"
 
-
+if macAddress == "ae5abeda5763":
+    baseFolder                = "/Users/lakitha/"
 
 dataFolderReference       = baseFolder + "mintsData/reference"
 dataFolderMQTTReference   = baseFolder + "mintsData/referenceMQTT"
 dataFolder                = baseFolder + "mintsData/raw"
+
+
 hostsDataFolder           = baseFolder + "mintsDataHosts/raw"
 dataFolderMQTT            = baseFolder + "mintsData/rawMQTT"
 statusJsonFile            = baseFolder + "status/status.json"

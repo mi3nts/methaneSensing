@@ -2,6 +2,8 @@ import socket
 from datetime import datetime
 import time 
 import re
+from collections import OrderedDict
+from mintsXU4 import mintsSensorReader as mSR
 
 class GaseraOneSensor:
     def __init__(self, host: str, port: int = 8888):
@@ -27,7 +29,47 @@ class GaseraOneSensor:
             "4": "Laser tuning in progress"
         }
     
-    
+    def connect(self, timeout=5):
+        """Connects to the GASERA ONE sensor over TCP/IP with a timeout."""
+        try:
+            
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.settimeout(timeout)  # Set timeout for the connection
+            self.socket.connect((self.host, self.port))
+            print(f"Connected to GASERA ONE at {self.host}:{self.port}")
+            # Publish 
+            dateTime  = datetime.now()
+            sensorDictionary = OrderedDict([
+                 ("dateTime"             ,str(datetime.now())),
+                 ("IP"                   ,"IP_"+ str(self.host)),
+                 ("ConnectionStatus"     ,0)
+        	     ])
+            mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
+            print(sensorDictionary)
+            return True
+
+        except socket.timeout:
+            print(f"Connection timed out after {timeout} seconds.")
+            sensorDictionary = OrderedDict([
+                 ("dateTime"             ,str(datetime.now())),
+                 ("IP"                   ,"IP_"+ str(self.host)),
+                 ("ConnectionStatus"     ,1)
+        	     ])            
+            mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
+            return False
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            sensorDictionary = OrderedDict([
+                 ("dateTime"             ,str(datetime.now())),
+                 ("IP"                   ,"IP_"+ str(self.host)),
+                 ("ConnectionStatus"     ,2)
+        	     ])            
+            mSR.sensorFinisher(dateTime,"GSR001CS",sensorDictionary)
+            return False            
+
+
+
     def format_ak_request(self, command: str, channel: str = "0", data: str = "") -> bytes:
         """Formats an AK request according to the specified protocol."""
         stx = b'\x02'
@@ -159,16 +201,8 @@ class GaseraOneSensor:
         
         return "Invalid response format"
     
-    
-    def connect(self):
-        """Connects to the GASERA ONE sensor over TCP/IP."""
-        try:
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.connect((self.host, self.port))
-            print(f"Connected to GASERA ONE at {self.host}:{self.port}")
-        except Exception as e:
-            print(f"Error: {e}")
-            return None
+        
+
 
     def disconnect(self):
         """Disconnects the connection to the sensor."""
@@ -331,55 +365,123 @@ class GaseraOneSensor:
 if __name__ == "__main__":
     # Create an instance of the sensor
     sensor = GaseraOneSensor("192.168.20.112")
-    
     # Connect to the sensor
     sensor.connect()
-    
+
+
+
+
+    # Connected to GASERA ONE at 192.168.20.112:8888
+    # Device Status: Error Status: 0, Device Status: Device idle state
+    # Active Errors: Active Errors: 8002, 8004
+    # Task List:
+    # Task ID: 7, Task Name: Calibration task
+    # Task ID: 11, Task Name: DEFAULT
+    # Task ID: 12, Task Name: FLUSH
+    # Measurement Status: Error Status: 0, Measurement Status: None (device is idle)
+    # Device Name: Error Status: 0, Device Name: mints-gasera-one
+    # Iteration Number: Error Status: 0, Iteration Number: 0
+    # Network Settings: Error Status: 0, Use DHCP: 1, IP Address: 192.168.20.112, Netmask: 255.255.255.0, Gateway: 192.168.20.1
+    # Device Date/Time: Error Status: 0, Date/Time: 2025-02-26T17:02:51
+    # Multi-Point Sampler Parameters: Error Status: 2, Multi-Point Sampler Parameters: []
+    # System Parameters: Error Status: 0, System Parameters: ['TargetPressure,850', 'FlushTimeBypass,1', 'NFlushBypass,1', 'FlushTimeCell,1', 'NFlushCell,6', 'GasInput,0', 'ContinuousPumping,0', 'GasExForEachChannel,0', 'CalibIterations,10', 'DeviceType,3', 'LoggingEnabled,1', 'ChannelGroupWaveNStepSize,0', 'SamplingMode,0', 'PumpRate,6.5', 'MovingAvgInterval,0', 'PPMRangeMin0,0', 'PPMRangeMax0,0', 'PPMRangeMin1,0', 'PPMRangeMax1,0', 'CompensationCompId,3', 'LaserTuneStartOffset1,0', 'LaserTuneStartOffset2,0', 'NumberOfLasers,1', 'AllowNegResults,0', 'ModbusSlaveId,0', 'DisableScanTuning,0', 'RemoteMaintenance,0', 'RemoteMaintenanceVisible,0', 'UsageTimeMeasure,8260', 'UsageTimeIdle,11190', 'STDVComponentIdCh0,0', 'STDVComponentIdCh1,0', 'PPMRangeMin2,0', 'PPMRangeMax2,0', 'STDVComponentIdCh2,0', 'PPMRangeMin3,0', 'PPMRangeMax3,0', 'STDVComponentIdCh3,0', 'PPMRangeMin4,0', 'PPMRangeMax4,0', 'STDVComponentIdCh4,0', 'PPMRangeMin5,0', 'PPMRangeMax5,0', 'STDVComponentIdCh5,0', 'PPMRangeMin6,0', 'PPMRangeMax6,0', 'STDVComponentIdCh6,0', 'PPMRangeMin7,0', 'PPMRangeMax7,0', 'STDVComponentIdCh7,0', 'PPMRangeMin8,0', 'PPMRangeMax8,0', 'STDVComponentIdCh8,0', 'PPMRangeMin9,0', 'PPMRangeMax9,0', 'STDVComponentIdCh9,0', 'PPMRangeMin10,0', 'PPMRangeMax10,0', 'STDVComponentIdCh10,0', 'PPMRangeMin11,0', 'PPMRangeMax11,0', 'STDVComponentIdCh11,0', 'PPMRangeMin12,0', 'PPMRangeMax12,0', 'STDVComponentIdCh12,0', 'STDVMPSInletCh0,0', 'STDVMPSInletCh1,0', 'STDVMPSInletCh2,0', 'STDVMPSInletCh3,0', 'STDVMPSInletCh4,0', 'STDVMPSInletCh5,0', 'STDVMPSInletCh6,0', 'STDVMPSInletCh7,0', 'STDVMPSInletCh8,0', 'STDVMPSInletCh9,0', 'STDVMPSInletCh10,0', 'STDVMPSInletCh11,0', 'STDVMPSInletCh12,0', 'BGCompensationInterval,1', 'InternalTimeout,0', 'ExternalTimeout,0', 'IntervalEnabled,0', 'y-AxisMin,0', 'y-AxisMax,0.1', 'y-AxisAutoscaleOn,1']
+    # Measurement Task Parameters: Error Status: 0, Parameters: ['74-82-8,124-38-9,7732-18-5,630-08-0,10024-97-2', '850', '1', '1', '6']
+    # Device Info: Error Status: 0, Manufacturer: "Gasera Ltd", Serial Number: "030109", Device Name: "MINTS-GASERA-ONE", Firmware Version: "010304"
+    # Self-Test Status: Error Status: 0, Self-Test Request Status: Success
+    # Device Self-Test Result: Self-test completed successfully
+    # Stop Measurement: Stop Measurement Response: 0 (0=no errors, 1=error)
+    # Start Measurement Response: Start Measurement Response: 0 (0=no errors, 1=error)
+    # Last Measurement Results:
+    # Timestamp: 1740589731, CAS: 74-82-8, Concentration: 0.919465 ppm
+    # Timestamp: 1740589731, CAS: 124-38-9, Concentration: 536.757 ppm
+    # Timestamp: 1740589731, CAS: 7732-18-5, Concentration: 14351.4 ppm
+    # Timestamp: 1740589731, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589731, CAS: 10024-97-2, Concentration: 0.382638 ppm
+    # Last Measurement Results:
+    # Timestamp: 1740589731, CAS: 74-82-8, Concentration: 0.919465 ppm
+    # Timestamp: 1740589731, CAS: 124-38-9, Concentration: 536.757 ppm
+    # Timestamp: 1740589731, CAS: 7732-18-5, Concentration: 14351.4 ppm
+    # Timestamp: 1740589731, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589731, CAS: 10024-97-2, Concentration: 0.382638 ppm
+    # Last Measurement Results:
+    # Timestamp: 1740589812, CAS: 74-82-8, Concentration: 0.840892 ppm
+    # Timestamp: 1740589812, CAS: 124-38-9, Concentration: 538.124 ppm
+    # Timestamp: 1740589812, CAS: 7732-18-5, Concentration: 14258.2 ppm
+    # Timestamp: 1740589812, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589812, CAS: 10024-97-2, Concentration: 0.356376 ppm
+    # Last Measurement Results:
+    # Timestamp: 1740589812, CAS: 74-82-8, Concentration: 0.840892 ppm
+    # Timestamp: 1740589812, CAS: 124-38-9, Concentration: 538.124 ppm
+    # Timestamp: 1740589812, CAS: 7732-18-5, Concentration: 14258.2 ppm
+    # Timestamp: 1740589812, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589812, CAS: 10024-97-2, Concentration: 0.356376 ppm
+    # Last Measurement Results:
+    # Timestamp: 1740589812, CAS: 74-82-8, Concentration: 0.840892 ppm
+    # Timestamp: 1740589812, CAS: 124-38-9, Concentration: 538.124 ppm
+    # Timestamp: 1740589812, CAS: 7732-18-5, Concentration: 14258.2 ppm
+    # Timestamp: 1740589812, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589812, CAS: 10024-97-2, Concentration: 0.356376 ppm
+    # Last Measurement Results:
+    # Timestamp: 1740589894, CAS: 74-82-8, Concentration: 0.97967 ppm
+    # Timestamp: 1740589894, CAS: 124-38-9, Concentration: 539.85 ppm
+    # Timestamp: 1740589894, CAS: 7732-18-5, Concentration: 14186.4 ppm
+    # Timestamp: 1740589894, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589894, CAS: 10024-97-2, Concentration: 0.348337 ppm
+    # Last Measurement Results:
+    # Timestamp: 1740589894, CAS: 74-82-8, Concentration: 0.97967 ppm
+    # Timestamp: 1740589894, CAS: 124-38-9, Concentration: 539.85 ppm
+    # Timestamp: 1740589894, CAS: 7732-18-5, Concentration: 14186.4 ppm
+    # Timestamp: 1740589894, CAS: 630-08-0, Concentration: 0 ppm
+    # Timestamp: 1740589894, CAS: 10024-97-2, Concentration: 0.348337 ppm
+    # Stop Measurement: Stop Measurement Response: 0 (0=no errors, 1=error)
+    # Disconnected from GASERA ONE
+
+
     # Get the device status, active errors, task list, last measurement results, and stop measurement
-    print(f"Device Status: {sensor.get_device_status()}")
-    print(f"Active Errors: {sensor.get_active_errors()}")
-    print(f"Task List:\n{sensor.get_task_list()}")
-    print(f"Measurement Status: {sensor.get_measurement_status()}")
-    print(f"Device Name: {sensor.request_device_name()}")    
-    print(f"Iteration Number: {sensor.request_iteration_number()}")
-    print(f"Network Settings: {sensor.request_network_settings()}")
-    print(f"Device Date/Time: {sensor.request_device_datetime()}")
-    print(f"Multi-Point Sampler Parameters: {sensor.request_multi_point_sampler()}")
-    print(f"System Parameters: {sensor.request_system_parameters()}")
-    print(f"Measurement Task Parameters: {sensor.request_task_parameters('11')}")
-    print(f"Device Info: {sensor.request_device_info()}")
-    print(f"Self-Test Status: {sensor.start_self_test()}")
-    time.sleep(120)
-    print(f"Device Self-Test Result: {sensor.get_device_self_test_result()}")
-    time.sleep(120)
-    print(f"Stop Measurement: {sensor.stop_measurement()}")
-    time.sleep(120)
-    task_id = "11"  # Example task ID
-    print(f"Start Measurement Response: {sensor.request_start_measurement(task_id)}")
-    time.sleep(120)
+    # print(f"Device Status: {sensor.get_device_status()}")
+    # print(f"Active Errors: {sensor.get_active_errors()}")
+    # print(f"Task List:\n{sensor.get_task_list()}")
+    # print(f"Measurement Status: {sensor.get_measurement_status()}")
+    # print(f"Device Name: {sensor.request_device_name()}")    
+    # print(f"Iteration Number: {sensor.request_iteration_number()}")
+    # print(f"Network Settings: {sensor.request_network_settings()}")
+    # print(f"Device Date/Time: {sensor.request_device_datetime()}")
+    # print(f"Multi-Point Sampler Parameters: {sensor.request_multi_point_sampler()}")
+    # print(f"System Parameters: {sensor.request_system_parameters()}")
+    # print(f"Measurement Task Parameters: {sensor.request_task_parameters('11')}")
+    # print(f"Device Info: {sensor.request_device_info()}")
+    # print(f"Self-Test Status: {sensor.start_self_test()}")
+    # time.sleep(120)
+    # print(f"Device Self-Test Result: {sensor.get_device_self_test_result()}")
+    # time.sleep(120)
+    # print(f"Stop Measurement: {sensor.stop_measurement()}")
+    # time.sleep(120)
+    # task_id = "11"  # The Default Task ID
+    # print(f"Start Measurement Response: {sensor.request_start_measurement(task_id)}")
+    # time.sleep(120)
     
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(30)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(30)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(30)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(30)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(30)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(30)
     
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(30)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(30)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(30)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(30)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(30)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(30)
 
-    print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
-    time.sleep(1)
+    # print(f"Last Measurement Results:\n{sensor.get_last_measurement_results()}")
+    # time.sleep(1)
 
-    print(f"Stop Measurement: {sensor.stop_measurement()}")
+    # print(f"Stop Measurement: {sensor.stop_measurement()}")
     
     # Disconnect when done
     sensor.disconnect()
