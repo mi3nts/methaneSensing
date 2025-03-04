@@ -349,7 +349,7 @@ class GaseraOneSensor:
                 sensorDictionary = OrderedDict([
                     ("dateTime"        ,str(dateTime.strftime('%Y-%m-%d %H:%M:%S.%f'))),
                     ("errorStatus"     ,int(error_status)),                    
-                    ("useDHCP"         ,self.use_dhcp),
+                    ("useDHCP"         ,int(self.use_dhcp)),
                     ("ip"              ,str(self.ip_address)),
                     ("netmask"         ,str(self.netmask)),
                     ("gateway"         ,str(self.gateway)),
