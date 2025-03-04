@@ -10,7 +10,7 @@ from mintsXU4 import mintsDefinitions as mD
 methanePort =   mD.inir2me5Port
 baudRate     = 38400
 loopInterval = 1 
-startTime    = 
+
 
 def main():
     """
