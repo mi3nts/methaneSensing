@@ -51,7 +51,7 @@ def main():
             print("In Engineering Mode")
             lineASCII = []
 
-            startTime      = startTimeMacro
+            startTime      = time.time()
             while True:
                 try:
                     # Read bytes from the serial buffer
@@ -93,11 +93,16 @@ def main():
                                 lineASCII = []
                                 lines     = []
 
-                            startTime = mSR.delayMints(time.time() - startTime,loopInterval)     
+                            startTime = mSR.delayMints(time.time() - startTime,loopInterval)   
+
+                except KeyboardInterrupt:
+                    print("\nUser interrupted. Exiting...")
+                    break  # Exit the loop graceful
 
                 except Exception as e:
                     print(f"Incomplete read. Error: {e}")
-                    break  # Exit the loop if an error occurs
+                    time.sleep(60)
+                    # break  # Exit the loop if an error occurs
 
     except serial.SerialException as e:
         print(f"Failed to connect to {methanePort}. Error: {e}")

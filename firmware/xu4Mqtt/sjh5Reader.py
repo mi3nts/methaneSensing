@@ -11,8 +11,6 @@ methanePort =   mD.sjh5Port
 baudRate = 9600
 loopInterval = 5
 
-startTime     = time.time()
-startTimePro  = startTime     
 
 # Command components
 IP                    = 0x11  # Fixed IP address
@@ -24,7 +22,8 @@ CMD_CHECK_MEASUREMENT   = 0x01
 CMD_SW_VERSION          = 0x1E
 CMD_INSTRUMENT_NUMBER   = 0x1F
 CMD_MEASURMENT_PROPERTY = 0x0D
-
+  
+startTimePro     = time.time()
 
 def main():
     startTime = time.time() 
@@ -45,6 +44,8 @@ def main():
     read_software_number(ser)
     read_measurment_properties(ser)
     read_gas_concentration(ser)
+
+    startTime = startTimePro
 
     #this will store the line
     line = []
