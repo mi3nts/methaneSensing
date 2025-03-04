@@ -10,7 +10,7 @@ from mintsXU4 import mintsDefinitions as mD
 methanePort =   mD.inir2me5Port
 baudRate     = 38400
 loopInterval = 1 
-
+startTimeMacro = time.time()
 
 def main():
     """
@@ -50,7 +50,7 @@ def main():
         if(EngineeringMode):
             print("In Engineering Mode")
             lineASCII = []
-            startTimeMacro = time.time()
+
             startTime      = startTimeMacro
             while True:
                 try:
