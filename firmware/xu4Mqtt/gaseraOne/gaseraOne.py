@@ -225,17 +225,15 @@ class GaseraOneSensor:
                 sensorDictionary = OrderedDict([
                     ("dateTime"            ,str(dateTime.strftime('%Y-%m-%d %H:%M:%S.%f'))),
                     ("errorStatus"         ,int(error_status)),
-                    ("taskID0"             ,taskID0),       
+                    ("taskID0"             ,int(taskID0)),       
                     ("taskName0"           ,taskName0),          
-                    ("taskID0"             ,taskID0),       
-                    ("taskName0"           ,taskName0),          
-                    ("taskID1"             ,taskID1),       
+                    ("taskID1"             ,int(taskID1)),       
                     ("taskName1"           ,taskName1),          
-                    ("taskID2"             ,taskID2),       
+                    ("taskID2"             ,int(taskID2)),       
                     ("taskName2"           ,taskName2),          
-                    ("taskID3"             ,taskID3),       
+                    ("taskID3"             ,int(taskID3)),       
                     ("taskName3"           ,taskName3),          
-                    ("taskID4"             ,taskID4),       
+                    ("taskID4"             ,int(taskID4)),       
                     ("taskName4"           ,taskName4),                                                                                                                         
                     ])            
                 mSR.sensorFinisher(dateTime,"GSR001"+command,sensorDictionary)
@@ -350,7 +348,7 @@ class GaseraOneSensor:
                     ("dateTime"        ,str(dateTime.strftime('%Y-%m-%d %H:%M:%S.%f'))),
                     ("errorStatus"     ,int(error_status)),                    
                     ("useDHCP"         ,int(self.use_dhcp)),
-                    ("ip"              ,str(self.ip_address)),
+                    ("gaseraIP"        ,str(self.ip_address)),
                     ("netmask"         ,str(self.netmask)),
                     ("gateway"         ,str(self.gateway)),
                     ])            
