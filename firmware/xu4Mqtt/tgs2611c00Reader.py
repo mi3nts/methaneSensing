@@ -32,7 +32,7 @@ except Exception as e:
     sys.exit()
 
 def read():
-    startTime = startTimePro
+    startTime = time.time()
     while True:
         try:
             dateTime = datetime.datetime.now()
