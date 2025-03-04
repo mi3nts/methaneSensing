@@ -11,8 +11,8 @@ methanePort =   mD.sjh5Port
 baudRate = 9600
 loopInterval = 5
 
-
-
+startTime     = time.time()
+startTimePro  = startTime     
 
 # Command components
 IP                    = 0x11  # Fixed IP address
@@ -118,6 +118,7 @@ def read_gas_concentration(ser):
             ("highHumidityStatus", status1 & 0x20), 
             ("RCDOverLimitStatus", status1 & 0x40), 
             ("MCDOverLimitStatus", status1 & 0x80), 
+            ("timeElapsed",        int(time.time() - startTimePro)),             
                     ])
         pprint(sensorDictionary)
         mSR.sensorFinisher(dateTime,"SJH5",sensorDictionary)

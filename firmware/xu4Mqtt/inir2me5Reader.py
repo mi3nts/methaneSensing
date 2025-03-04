@@ -10,7 +10,7 @@ from mintsXU4 import mintsDefinitions as mD
 methanePort =   mD.inir2me5Port
 baudRate     = 38400
 loopInterval = 1 
-
+startTime    = 
 
 def main():
     """
@@ -80,6 +80,7 @@ def main():
                                     ("act1SecAverage",     int(lines[5], 16)), 
                                     ("crc",                int(lines[6], 16)), 
                                     ("crc1sComp",          int(lines[7], 16)), 
+                                    ("timeElapsed",        int(time.time() - startTimeMacro)), 
                                             ])
                                 pprint(sensorDictionary)
                                 

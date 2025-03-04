@@ -10,9 +10,9 @@ from mintsXU4 import mintsSensorReader as mSR
 
 from gaseraOne.gaseraOne import GaseraOneSensor
 
-hostIP         = "192.168.20.112"
+hostIP          = "192.168.20.112"
 
-defaultTaskID = "11"
+defaultTaskID   = "11"
 
 if __name__ == "__main__":
     print("==========================================")
@@ -29,13 +29,18 @@ if __name__ == "__main__":
 
     sensor.startUpSequece()
 
+
+
     while True:
         try:
-            sensor.request_last_measurement_results()
+            print(sensor.request_last_measurement_results())
             time.sleep(60)
 
+            if (time.time() - sensor.periodicCheckTime) > 3600:
+                sensor.periodicCheck()
 
-        #  ADD Hourly and Daily Checks 
+            if (time.time() - sensor.periodicCheckTime) > 6086400:
+                sensor.dailyCheck()
 
         except KeyboardInterrupt:
             print("\nUser interrupted. Exiting...")

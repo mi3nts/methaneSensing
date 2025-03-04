@@ -48,7 +48,7 @@ def delayMints(timeSpent,loopIntervalIn):
 
 
 def sensorFinisherWearable(dateTime,hostID,sensorName,sensorDictionary):
-    #Getting Write Path
+    print()
     writePath = getWritePathWearable(hostID,sensorName,dateTime)
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
@@ -59,7 +59,7 @@ def sensorFinisherWearable(dateTime,hostID,sensorName,sensorDictionary):
        mL.writeJSONLatestWearable(hostID,sensorName,sensorDictionary)
     print(sensorName)
     pprint(sensorDictionary)
-
+    print()
 
 def getWritePathWearable(nodeID,labelIn,dateTime):
     #Example  : MINTS_0061_OOPCN3_2019_01_04.csv
@@ -70,7 +70,6 @@ def getWritePathWearable(nodeID,labelIn,dateTime):
 
 
 def sensorFinisher(dateTime,sensorName,sensorDictionary):
-    #Getting Write Path
     writePath = getWritePath(sensorName,dateTime)
     exists = directoryCheck(writePath)
     writeCSV2(writePath,sensorDictionary,exists)
@@ -82,7 +81,7 @@ def sensorFinisher(dateTime,sensorName,sensorDictionary):
     print(sensorName)
     pprint(sensorDictionary)
     print("-----------------------------------")
-
+    print()
 
 def sensorFinisherReference(dateTime,sensorName,sensorDictionary):
     # Getting Write Path

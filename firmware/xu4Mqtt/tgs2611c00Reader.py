@@ -31,14 +31,15 @@ except Exception as e:
     time.sleep(.5)
     sys.exit()
 
-def read(startTimePro):
+def read():
     startTime = startTimePro
     while True:
         try:
             dateTime = datetime.datetime.now()
             sensorDictionary = OrderedDict([
-                ("dateTime", str(dateTime)),
+                ("dateTime",            str(dateTime)),
                 ("methaneEQBusVoltage", ina.voltage()),  
+                ("timeElapsed",         int(time.time() - startTimePro)),             
                         ])
             pprint(sensorDictionary)  
             print()       

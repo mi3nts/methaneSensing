@@ -16,7 +16,9 @@ class GaseraOneSensor:
     def __init__(self, host: str, defaultTaskID, port: int = 8888):
         self.host = host
         self.defualtTaskID = defaultTaskID
-        self.startUpTime = time.time()
+        self.startUpTime       = time.time()
+        self.periodicCheckTime = time.time()    
+        self.dailyCheckTime    = time.time()  
         self.port = port
         self.prevTimeStamp = datetime.now(timezone.utc)
         self.status_map = {
@@ -51,7 +53,8 @@ class GaseraOneSensor:
             "7440-37-1" : "argon",
             "7782-50-5" : "chlorine",
             "630-08-0"  : "carbonMonoxide",
-            "2551-62-4" : "sulfurHexafluoride"
+            "2551-62-4" : "sulfurHexafluoride",
+            "7732-18-5" : "water",
         }
 
     def connect(self, timeout=5):
@@ -62,8 +65,9 @@ class GaseraOneSensor:
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.settimeout(timeout)  # Set timeout for the connection
             self.socket.connect((self.host, self.port))
+            print()
             print(f"Connected to GASERA ONE at {self.host}:{self.port}")
-            # Publish 
+            print()
            
             sensorDictionary = OrderedDict([
                  ("dateTime"             ,str(dateTime.strftime('%Y-%m-%d %H:%M:%S.%f'))),
@@ -116,6 +120,7 @@ class GaseraOneSensor:
         """Request device status and parse the response."""
         command  = "ASTS"
         dateTime = datetime.now(timezone.utc)
+        time.sleep(1)
 
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
@@ -145,6 +150,7 @@ class GaseraOneSensor:
         """Request device status and parse the response."""
         command  = "AERR"
         dateTime = datetime.now(timezone.utc)
+        time.sleep(1)
 
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
@@ -182,7 +188,8 @@ class GaseraOneSensor:
         """Request device status and parse the response."""
         command  = "ATSK"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -242,7 +249,8 @@ class GaseraOneSensor:
         """Request measurement status (AMST) and parse the response."""
         command  = "AMST"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -273,7 +281,8 @@ class GaseraOneSensor:
         """Request device name and parse the response."""
         command  = "ANAM"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -298,7 +307,8 @@ class GaseraOneSensor:
         """Request current measurement iteration number and parse the response."""
         command  = "AITR"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -323,7 +333,8 @@ class GaseraOneSensor:
         """Request current network settings and parse the response."""
         command  = "ANET"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -362,7 +373,8 @@ class GaseraOneSensor:
         """Request current device date and time."""
         command  = "ACLK"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -388,7 +400,8 @@ class GaseraOneSensor:
         """Request multi-point sampler parameters."""
         command  = "AMPS"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -425,7 +438,8 @@ class GaseraOneSensor:
         """Request system parameters."""
         command  = "ASYP"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         time.sleep(.1)
@@ -466,7 +480,8 @@ class GaseraOneSensor:
         """Request measurement task parameters."""
         command  = "ATSP"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command, data=self.defualtTaskID)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -498,7 +513,8 @@ class GaseraOneSensor:
         """Request device information and parse the response."""
         command  = "ADEV"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -535,7 +551,8 @@ class GaseraOneSensor:
         """Request device information and parse the response."""
         command  = "STST"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -560,7 +577,8 @@ class GaseraOneSensor:
         """Request device information and parse the response."""
         command  = "ASTR"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -597,7 +615,8 @@ class GaseraOneSensor:
         """Request to stop the current measurement and parse the response."""
         command  = "STPM"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command)
         self.socket.sendall(request_status)
         response_status = self.socket.recv(1024)
@@ -624,7 +643,8 @@ class GaseraOneSensor:
         """Request to start a new measurement based on the specified task ID."""
         command  = "STAM"
         dateTime = datetime.now(timezone.utc)
-
+        time.sleep(1)
+        
         request_status = self.format_ak_request(command, data=self.defualtTaskID)
 
         self.socket.sendall(request_status)
@@ -678,9 +698,14 @@ class GaseraOneSensor:
                     casGas    = self.cas_to_gas.get(parts[i + 1], "unknownCASNumber")
                     conc_ppm  = parts[i + 2]
                     self.measurements.append(f"Timestamp: {timestamp}, CAS: {cas}, gas: {casGas}, Concentration: {conc_ppm} ppm")
-                    sensorDictionary[casGas]            =  float(conc_ppm)
-                    sensorDictionary["iterationNumber"] = int(self.iteration_number)
-                    sensorDictionary["elapsedTime"]     = int(time.time() - self.startUpTime)                     
+                    sensorDictionary[casGas]                           = float(conc_ppm)
+
+                sensorDictionary["iterationNumber"]                = int(self.iteration_number)
+                sensorDictionary["elapsedTime"]                    = int(time.time() - self.startUpTime)          
+                sensorDictionary["elapsedTimeSinceDailyCheck"]     = int(time.time() - self.dailyCheckTime)       
+                sensorDictionary["elapsedTimePeriodicCheck"]       = int(time.time() - self.periodicCheckTime)     
+
+
                 if (self.timeStamp > self.prevTimeStamp):
                     print("New data available from the Gasera One")
                     mSR.sensorFinisher(self.timeStamp,"GSR001"+command,sensorDictionary)
@@ -705,7 +730,9 @@ class GaseraOneSensor:
         print("Running Start Up Sequence")
         time.sleep(10)
         print(self.stop_measurement())
+        time.sleep(60)
         print(self.request_status())
+                
         print(self.request_active_errors())
         # MAKE SURE TO MAKE STRING
         print(self.request_task_list())
@@ -715,10 +742,8 @@ class GaseraOneSensor:
         print(self.request_iteration_number())
         # MAKE SURE TO MAKE STRING
         print(self.request_network_settings())
-        # Network Settings: Error Status: 0, Use DHCP: 1, IP Address: 192.168.20.112, Netmask: 255.255.255.0, Gateway: 192.168.20.1
         # MAKE SURE TO MAKE STRING
         print(self.request_datetime())
-        # Device Date/Time: Error Status: 0, Date/Time: 2025-02-26T17:02:51
         print(self.request_multi_point_sampler_parameters())
         print(self.request_system_parameters())
         # MAKE SURE TO MAKE STRING
@@ -732,13 +757,17 @@ class GaseraOneSensor:
         print(self.start_measurement())
         time.sleep(120)
 
+    #  May be not do this 
     def periodicCheck(self):
+        self.periodicCheckTime  = time.time()       
         print("Running Periodic Checks")    
         print(self.request_measurement_status())
         print(self.request_network_settings())
         print(self.request_datetime())        
 
-    def dailySelfCheck(self):
+
+    def dailyCheck(self):
+        self.dailyCheckTime = time.time()              
         print("Running Daily Self Checks")    
         time.sleep(10)
         print(self.stop_measurement())
