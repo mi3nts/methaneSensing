@@ -43,7 +43,7 @@ def main():
     read_instrument_number(ser)
     read_software_number(ser)
     read_measurment_properties(ser)
-    read_gas_concentration(ser)
+    # read_gas_concentration(ser)
 
     startTime = time.time()
 
@@ -51,7 +51,7 @@ def main():
         try:
             read_gas_concentration(ser)
             startTime = mSR.delayMints(time.time() - startTime,loopInterval)
-            
+
         except KeyboardInterrupt:
             print("\nUser interrupted. Exiting...")
             break  # Exit the loop graceful
