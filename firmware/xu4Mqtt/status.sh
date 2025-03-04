@@ -23,12 +23,12 @@ sleep 2
 sleep 1
 echo "SJH5"
 echo $(pgrep -f 'sjh5Reader.py')
-sleep 2
+sleep 1
 
 sleep 1
 echo "TGS2611C00"
 echo $(pgrep -f 'tgs2611c00Reader.py')
-sleep 2
+sleep 1
 
 python3 ipReader.py
-sleep 5
+sleep 1
