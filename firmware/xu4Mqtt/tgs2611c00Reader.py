@@ -47,6 +47,10 @@ def read():
             if time.time() - startTimePro> 60 :
                 print("Sensor Warmed Up")
                 mSR.sensorFinisher(dateTime,"TGS2611C00",sensorDictionary)
+            else:
+                print("Sensor Not Warmed Up")
+                pprint(sensorDictionary)  
+                print()    
 
             startTime = mSR.delayMints(time.time() - startTime,loopInterval)
 
