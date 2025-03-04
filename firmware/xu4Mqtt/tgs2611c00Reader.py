@@ -41,8 +41,8 @@ def read():
                 ("methaneEQBusVoltage", ina.voltage()),  
                 ("timeElapsed",         int(time.time() - startTimePro)),             
                         ])
-            pprint(sensorDictionary)  
-            print()       
+            # pprint(sensorDictionary)  
+            # print()       
                                       
             if time.time() - startTimePro> 60 :
                 print("Sensor Warmed Up")
@@ -65,4 +65,3 @@ if __name__ == "__main__":
     print("=============")
     read()
 
-    
