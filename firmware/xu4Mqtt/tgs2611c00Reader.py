@@ -63,4 +63,4 @@ if __name__ == "__main__":
     print("=============")
     print("    MINTS    ")
     print("=============")
-    read(startTimePro)
+    read()
