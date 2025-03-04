@@ -5,6 +5,9 @@ sleep 1
 kill $(pgrep -f 'airMarReader.py')
 sleep 1
 
+kill $(pgrep -f 'gaseraOneReader.py')
+sleep 1
+
 kill $(pgrep -f 'inir2me5Reader.py')
 sleep 1
 
