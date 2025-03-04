@@ -45,14 +45,16 @@ def main():
     read_measurment_properties(ser)
     read_gas_concentration(ser)
 
-    startTime = startTimePro
+    startTime = time.time()
 
-    #this will store the line
-    line = []
     while True:
         try:
             read_gas_concentration(ser)
             startTime = mSR.delayMints(time.time() - startTime,loopInterval)
+            
+        except KeyboardInterrupt:
+            print("\nUser interrupted. Exiting...")
+            break  # Exit the loop graceful
 
         except Exception as e:
             print(f"Incomplete read. Error: {e}")
