@@ -120,7 +120,7 @@ def read_gas_concentration(ser):
             ("MCDOverLimitStatus", status1 & 0x80), 
             ("timeElapsed",        int(time.time() - startTimePro)),             
                     ])
-        pprint(sensorDictionary)
+        # pprint(sensorDictionary)
         mSR.sensorFinisher(dateTime,"SJH5",sensorDictionary)
 
 
