@@ -494,7 +494,7 @@ class GaseraOneSensor:
                 sensorDictionary = OrderedDict([
                     ("dateTime"          ,str(dateTime.strftime('%Y-%m-%d %H:%M:%S.%f'))),
                     ("errorStatus"       ,int(error_status)),
-                    ("taskID"            ,self.defualtTaskID),
+                    ("taskID"            ,int(self.defualtTaskID)),
                     ("casNumbers"        ,str(self.task_parameters[0]).replace(",","_")),
                     ("targetPressure"    ,int(self.task_parameters[1])),
                     ("flushTimeBypass"   ,int(self.task_parameters[2])),
