@@ -10,7 +10,7 @@ from mintsXU4 import mintsSensorReader as mSR
 
 from gaseraOne.gaseraOne import GaseraOneSensor
 
-hostIP          = "192.168.20.112"
+hostIP          = "192.168.20.119"
 
 defaultTaskID   = "11"
 
@@ -64,4 +64,3 @@ if __name__ == "__main__":
     print("==========================================")
     print("=============== MINTS DONE ===============")
     print("------------------------------------------")
-
